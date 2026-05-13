@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos os Produtos | TKS Rádios</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .listing-page {
+            padding-top: 60px;
+            background: var(--color-neutral-100);
+            min-height: 100vh;
+        }
+
+        .listing-header {
+            background: var(--color-secondary);
+            color: white;
+            padding: 80px 0;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 120px;
+        }
+
+        .filter-group {
+            margin-bottom: 30px;
+        }
+
+        .filter-title {
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 45px 15px 20px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-neutral-300);
+            font-family: inherit;
+            font-size: 14px;
+            transition: var(--transition-base);
+        }
+
+        .search-input:focus {
+            border-color: var(--color-primary);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(255, 0, 0, 0.05);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .filter-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .filter-item {
+            margin-bottom: 12px;
+        }
+
+        .filter-link {
+            text-decoration: none;
+            color: #666;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            transition: var(--duration-fast);
+        }
+
+        .filter-link:hover, .filter-link.active {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .filter-count {
+            background: var(--color-neutral-100);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            color: #999;
+        }
+
+        /* Checkbox style */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #444;
+            cursor: pointer;
+        }
+
+        .checkbox-item input {
+            accent-color: var(--color-primary);
+            width: 18px;
+            height: 18px;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar { position: static; margin-bottom: 40px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header" style="height: 100px; display: flex; align-items: center; background: white; position: fixed; top: 0; width: 100%; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1450px; margin: 0 auto; padding: 0 20px;">
+            <a href="index.html" class="logo" style="display: flex; align-items: center; text-decoration: none;">
+                <img src="img/tks-logo-ver-tks.png" alt="TKS Rádios Logo" width="150" height="auto">
+            </a>
+            
+            <nav>
+                <ul style="display: flex; gap: 40px; list-style: none; margin: 0; padding: 0;">
+                    <li><a href="index.html#produtos" style="text-decoration: none; color: #000; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Produtos</a></li>
+                    <li><a href="index.html#sobre" style="text-decoration: none; color: #000; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Sobre Nós</a></li>
+                    <li><a href="index.html#downloads" style="text-decoration: none; color: #000; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Downloads</a></li>
+                    <li><a href="https://wa.me/5545988288408?text=Olá!%20Tenho%20uma%20dúvida%20técnica%20sobre%20os%20produtos%20TKS." style="text-decoration: none; color: #000; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Suporte</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-search" style="position: relative; margin-left: 20px; flex: 1; max-width: 200px;">
+                <input type="text" id="global-search" placeholder="Buscar..." 
+                    style="width: 100%; height: 44px; padding: 0 40px 0 15px; border-radius: 8px; border: 1px solid #DDD; font-size: 13px; background: white; transition: 0.3s; font-family: 'Montserrat', sans-serif;">
+                <img src="img/lupa-icon.svg" alt="Buscar" 
+                    style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; pointer-events: none; opacity: 0.6;">
+            </div>
+
+            <a href="https://wa.me/5545988288408?text=Olá!%20Vim%20pelo%20site%20da%20TKS%20Rádios%20e%20gostaria%20de%20tirar%20uma%20dúvida." class="btn btn-primary" 
+                style="padding: 12px 24px; min-height: 48px; display: flex; gap: 8px; align-items: center; text-decoration: none; border-radius: 8px; background: #FF0000; color: white; font-weight: 700; width: auto;">
+                <img src="img/whatsapp-icon.svg" alt="WhatsApp" width="20" height="20"
+                    style="filter: brightness(0) invert(1);">
+                WhatsApp
+            </a>
+        </div>
+    </header>
+
+    <main class="listing-page">
+        <!-- Listing Banner -->
+        <section class="listing-header">
+            <div class="container">
+                <span class="badge" style="background: rgba(255,255,255,0.1); color: white; border-color: rgba(255,255,255,0.2);">Showroom Digital</span>
+                <h1 style="font-size: 3.5rem; margin-top: 15px;">Todos os <span style="color: var(--color-primary);">Produtos</span></h1>
+                <p style="color: var(--color-neutral-300); margin-top: 20px;">Explore a linha mais completa de radiocomunicação do Brasil.</p>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="grid">
+                <!-- SIDEBAR -->
+                <aside style="grid-column: span 3;">
+                    <div class="sidebar">
+                        <!-- Search -->
+                        <div class="search-box">
+                            <input type="text" id="search-input" class="search-input" placeholder="Buscar produto..."
+                                style="width: 100%; height: 48px; padding: 0 20px; border-radius: 8px; border: 1px solid #DDD; font-size: 14px; transition: 0.3s; outline: none;">
+                            <img src="img/lupa-icon.svg" alt="Lupa" class="search-icon" style="width: 18px; height: 18px; opacity: 0.5;">
+                        </div>
+
+                        <!-- Categorias -->
+                        <div class="filter-group">
+                            <h3 class="filter-title">Categorias</h3>
+                            <ul class="filter-list">
+                                <li class="filter-item">
+                                    <a href="#" class="filter-link active" data-filter="all"><span>Todos</span> <span class="filter-count">7</span></a>
+                                </li>
+                                <li class="filter-item">
+                                    <a href="#" class="filter-link" data-filter="radio"><span>Rádios PX</span> <span class="filter-count">2</span></a>
+                                </li>
+                                <li class="filter-item">
+                                    <a href="#" class="filter-link" data-filter="antena"><span>Antenas</span> <span class="filter-count">1</span></a>
+                                </li>
+                                <li class="filter-item">
+                                    <a href="#" class="filter-link" data-filter="fonte"><span>Fontes</span> <span class="filter-count">1</span></a>
+                                </li>
+                                <li class="filter-item">
+                                    <a href="#" class="filter-link" data-filter="acessorio"><span>Acessórios</span> <span class="filter-count">3</span></a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Filtros Adicionais -->
+                        <div class="filter-group">
+                            <h3 class="filter-title">Status</h3>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" class="status-checkbox" value="homologado"> Homologado Anatel
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" class="status-checkbox" value="estoque"> Em Estoque
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" class="status-checkbox" value="lancamento"> Lançamentos
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Banner Auxiliar Sidebar -->
+                        <div style="background: var(--color-secondary); padding: 25px; border-radius: var(--radius-md); color: white; margin-top: 40px;">
+                            <h4 style="font-size: 14px; margin-bottom: 10px;">Dúvida Técnica?</h4>
+                            <p style="font-size: 12px; color: #999; margin-bottom: 15px;">Fale agora com um especialista via WhatsApp.</p>
+                            <a href="https://wa.me/5545988288408?text=Olá!%20Tenho%20uma%20dúvida%20técnica%20sobre%20os%20produtos%20TKS." style="color: var(--color-primary); font-size: 13px; font-weight: 700; text-decoration: none;">Chamar agora →</a>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- PRODUCT GRID -->
+                <div style="grid-column: span 9;">
+                    <!-- Sort and Count Header -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                        <p style="font-size: 14px; color: #666;">Mostrando <strong>1-9</strong> de 12 produtos</p>
+                        <select style="padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--color-neutral-300); font-size: 14px;">
+                            <option>Ordenar por: Relevância</option>
+                            <option>Menor Preço</option>
+                            <option>Maior Preço</option>
+                        </select>
+                    </div>
+
+                        <div id="products-grid" class="grid">
+                            <!-- Produto 1 -->
+                            <article class="product-card" style="grid-column: span 4;" data-category="radio" data-status="lancamento">
+                                <div class="product-image">
+                                    <img src="img/tk-110 orion/radio tks tk-110 orion - principal.jpg" alt="TKS TK-110 Orion">
+                                </div>
+                                <div class="product-info">
+                                    <span class="category-label">Rádio PX</span>
+                                    <h3 class="product-title">TK-110 Orion</h3>
+                                    <div class="tag-anatel">⚠️ Em homologação</div>
+                                    <div class="product-price">R$ 1.250,00</div>
+                                    <a href="produto.html" class="btn btn-primary" style="width: 100%;">Ver Detalhes</a>
+                                </div>
+                            </article>
+
+                            <!-- Produto 2 -->
+                            <article class="product-card" style="grid-column: span 4;" data-category="fonte" data-status="homologado">
+                                <div class="product-image">
+                                    <div style="background: #222; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #444; font-size: 40px; font-weight: 800;">TKS</div>
+                                </div>
+                                <div class="product-info">
+                                    <span class="category-label">Fonte</span>
+                                    <h3 class="product-title">Fonte Estabilizada 30A</h3>
+                                    <div class="tag-homologado">✅ Homologado</div>
+                                    <div class="product-price">R$ 450,00</div>
+                                    <a href="#" class="btn btn-primary" style="width: 100%;">Ver Detalhes</a>
+                                </div>
+                            </article>
+
+                            <!-- Produto 3 -->
+                            <article class="product-card" style="grid-column: span 4;" data-category="antena" data-status="homologado">
+                                <div class="product-image">
+                                    <div style="background: #222; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #444; font-size: 40px; font-weight: 800;">TKS</div>
+                                </div>
+                                <div class="product-info">
+                                    <span class="category-label">Antena</span>
+                                    <h3 class="product-title">Antena Maria-Mole</h3>
+                                    <div class="tag-homologado">✅ Homologado</div>
+                                    <div class="product-price">R$ 180,00</div>
+                                    <a href="#" class="btn btn-primary" style="width: 100%;">Ver Detalhes</a>
+                                </div>
+                            </article>
+
+                            <!-- Produto 4 -->
+                            <article class="product-card" style="grid-column: span 4;" data-category="acessorio" data-status="homologado">
+                                <div class="product-image">
+                                    <div style="background: #222; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #444; font-size: 40px; font-weight: 800;">TKS</div>
+                                </div>
+                                <div class="product-info">
+                                    <span class="category-label">Cabo</span>
+                                    <h3 class="product-title">Cabo Coaxial Premium</h3>
+                                    <div class="tag-homologado">✅ Homologado</div>
+                                    <div class="product-price">R$ 85,00</div>
+                                    <a href="#" class="btn btn-primary" style="width: 100%;">Ver Detalhes</a>
+                                </div>
+                            </article>
+
+                            <!-- Produto 5 -->
+                            <article class="product-card" style="grid-column: span 4;" data-category="acessorio" data-status="homologado">
+                                <div class="product-image">
+                                    <div style="background: #222; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #444; font-size: 40px; font-weight: 800;">TKS</div>
+                                </div>
+                                <div class="product-info">
+                                    <span class="category-label">Suporte</span>
+                                    <h3 class="product-title">Suporte Articulado</h3>
+                                    <div class="tag-homologado">✅ Homologado</div>
+                                    <div class="product-price">R$ 120,00</div>
+                                    <a href="#" class="btn btn-primary" style="width: 100%;">Ver Detalhes</a>
+                                </div>
+                            </article>
+
+                            <!-- Produto 6 -->
+                            <article class="product-card" style="grid-column: span 4;" data-category="acessorio" data-status="homologado">
+                                <div class="product-image">
+                                    <div style="background: #222; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #444; font-size: 40px; font-weight: 800;">TKS</div>
+                                </div>
+                                <div class="product-info">
+                                    <span class="category-label">Acessório</span>
+                                    <h3 class="product-title">Microfone de Mão</h3>
+                                    <div class="tag-homologado">✅ Homologado</div>
+                                    <div class="product-price">R$ 150,00</div>
+                                    <a href="#" class="btn btn-primary" style="width: 100%;">Ver Detalhes</a>
+                                </div>
+                            </article>
+
+                            <!-- Produto 7 -->
+                            <article class="product-card" style="grid-column: span 4;" data-category="radio" data-status="homologado">
+                                <div class="product-image">
+                                    <div style="background: #222; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #444; font-size: 40px; font-weight: 800;">TKS</div>
+                                </div>
+                                <div class="product-info">
+                                    <span class="category-label">Rádio PX</span>
+                                    <h3 class="product-title">TKS VR-94 (Classic)</h3>
+                                    <div class="tag-homologado">✅ Homologado</div>
+                                    <div class="product-price">R$ 980,00</div>
+                                    <a href="#" class="btn btn-primary" style="width: 100%;">Ver Detalhes</a>
+                                </div>
+                            </article>
+                        </div>
+
+                    <!-- Pagination -->
+                    <div style="display: flex; justify-content: center; gap: 10px; margin-top: 60px;">
+                        <a href="#" class="btn btn-outline" style="min-width: 45px; padding: 10px; border-color: var(--color-primary); color: var(--color-primary);">1</a>
+                        <a href="#" class="btn btn-outline" style="min-width: 45px; padding: 10px;">2</a>
+                        <a href="#" class="btn btn-outline" style="min-width: 45px; padding: 10px;">3</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="section-padding noise-bg" style="background: #000; color: #FFF; border-top: 1px solid rgba(255,255,255,0.1);">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 60px;">
+                <img src="img/tks-logo-ver-tks.png" alt="TKS Logo" width="120">
+                <p style="color: #666; font-size: 14px; margin-top: 20px;">Líder em Radiocomunicação PX no Brasil.</p>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 40px;">
+                <p style="font-size: 12px; color: #444;">© 2024 TKS Rádios. Todos os direitos reservados.</p>
+                <p style="font-size: 12px; color: #444;">Design by Sampa Webcraft</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search-input');
+            const categoryLinks = document.querySelectorAll('.filter-link');
+            const statusCheckboxes = document.querySelectorAll('.status-checkbox');
+            const productCards = document.querySelectorAll('.product-card');
+
+            let currentCategory = 'all';
+
+            function filterProducts() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const activeStatus = Array.from(statusCheckboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.value);
+
+                productCards.forEach(card => {
+                    const title = card.querySelector('.product-title').textContent.toLowerCase();
+                    const category = card.dataset.category;
+                    const status = card.dataset.status;
+
+                    const matchesSearch = title.includes(searchTerm);
+                    const matchesCategory = currentCategory === 'all' || category === currentCategory;
+                    const matchesStatus = activeStatus.length === 0 || activeStatus.includes(status);
+
+                    if (matchesSearch && matchesCategory && matchesStatus) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            // Search listener
+            searchInput.addEventListener('input', filterProducts);
+
+            // Category listener
+            categoryLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    categoryLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    currentCategory = link.dataset.filter;
+                    filterProducts();
+                });
+            });
+
+            // Checkbox listener
+            statusCheckboxes.forEach(cb => {
+                cb.addEventListener('change', filterProducts);
+            });
+
+            // Handle URL params (Initial Filter)
+            const urlParams = new URLSearchParams(window.location.search);
+            const catParam = urlParams.get('cat');
+            const qParam = urlParams.get('q');
+
+            if (catParam) {
+                const targetLink = document.querySelector(`.filter-link[data-filter="${catParam}"]`);
+                if (targetLink) {
+                    categoryLinks.forEach(l => l.classList.remove('active'));
+                    targetLink.classList.add('active');
+                    currentCategory = catParam;
+                    filterProducts();
+                }
+            }
+
+            if (qParam) {
+                searchInput.value = decodeURIComponent(qParam);
+                filterProducts();
+            }
+
+            // Design System Focus Effect
+            const globalSearch = document.getElementById('global-search');
+            globalSearch.addEventListener('focus', () => {
+                globalSearch.style.borderColor = '#FF0000';
+                globalSearch.style.boxShadow = '0 0 0 4px rgba(255, 0, 0, 0.1)';
+            });
+            globalSearch.addEventListener('blur', () => {
+                globalSearch.style.borderColor = '#DDD';
+                globalSearch.style.boxShadow = 'none';
+            });
+
+            // Header Search Logic
+            document.getElementById('global-search').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    const query = this.value.toLowerCase().trim();
+                    const keywords = {
+                        'orion': 'produto.html',
+                        'tk-110': 'produto.html',
+                        'tk110': 'produto.html',
+                        'radio': 'produtos.html?cat=radio',
+                        'px': 'produtos.html?cat=radio',
+                        'antena': 'produtos.html?cat=antena',
+                        'maria mole': 'produtos.html?cat=antena',
+                        'fonte': 'produtos.html?cat=fonte',
+                        'energia': 'produtos.html?cat=fonte',
+                        'acessorio': 'produtos.html?cat=acessorio',
+                        'cabo': 'produtos.html?cat=acessorio',
+                        'suporte': 'produtos.html?cat=acessorio',
+                        'mic': 'produtos.html?cat=acessorio'
+                    };
+                    if (keywords[query]) {
+                        window.location.href = keywords[query];
+                    } else {
+                        // If already on produtos.html, just update filter
+                        searchInput.value = query;
+                        filterProducts();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

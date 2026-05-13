@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System - TKS Rádios | Completo</title>
+    <!-- Google Fonts: Montserrat & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap"
+        rel="stylesheet">
+    <!-- GSAP (GreenSock Animation Platform) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <style>
+        :root {
+            /* 1. PALETA DE CORES */
+            --color-primary: #FF0000;
+            --color-primary-dark: #CC0000;
+            --color-primary-light: #FF3333;
+            --color-secondary: #000000;
+            --color-secondary-light: #1A1A1A;
+            --color-secondary-alt: #0D101F;
+            --color-neutral-0: #FFFFFF;
+            --color-neutral-100: #F7F7F7;
+            --color-neutral-300: #CACACA;
+            --color-neutral-700: #121212;
+            --color-accent: #EEE109;
+            --color-highlight: #FF7948;
+            --color-success: #21BE6E;
+
+            /* 2. GRADIENTES */
+            --gradient-overlay-dark: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+            --gradient-hero: linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
+
+            /* 3. TIPOGRAFIA - FONT FAMILIES */
+            --font-display: 'Montserrat', sans-serif;
+            --font-body: 'Montserrat', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* 4. ESCALA TIPOGRÁFICA */
+            --text-h1-size: 3rem;
+            /* 48px */
+            --text-h2-size: 2.25rem;
+            /* 36px */
+            --text-h3-size: 1.75rem;
+            /* 28px */
+            --text-h4-size: 1.5rem;
+            /* 24px */
+            --text-body-size: 1.125rem;
+            /* 18px */
+            --text-small-size: 0.875rem;
+            /* 14px */
+
+            /* 5. PESOS E ALTURAS */
+            --weight-regular: 400;
+            --weight-medium: 500;
+            --weight-semibold: 600;
+            --weight-bold: 700;
+            --weight-black: 800;
+            --lh-display: 1.1;
+            --lh-heading: 1.3;
+            --lh-body: 1.6;
+
+            /* 6. ESPAÇAMENTO (Base 5px/10px Ref. Porto) */
+            --space-xs: 0.3125rem; /* 5px */
+            --space-sm: 0.625rem;  /* 10px */
+            --space-md: 1.25rem;   /* 20px */
+            --space-lg: 2.5rem;    /* 40px */
+            --space-xl: 5rem;      /* 80px */
+            --space-section: var(--space-xl);
+
+            /* 7. BORDAS E RAIOS */
+            --radius-xs: 2px;
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+
+            /* 8. SOMBRAS */
+            --shadow-subtle: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+            --shadow-elevated: 0 8px 24px rgba(0, 0, 0, 0.16);
+            --shadow-dramatic: 0 12px 32px rgba(0, 0, 0, 0.24);
+
+            /* 9. BORDAS */
+            --border-width: 1px;
+            --border-style: solid;
+            --border-color: #CACACA;
+            --border-default: var(--border-width) var(--border-style) var(--border-color);
+            --border-bold: 2px var(--border-style) var(--color-primary);
+
+            /* 10. COMPONENTES VISUAIS */
+            --input-height: 56px;
+            --btn-height: 56px;
+
+            /* 11. GRID E LAYOUT (Ref. Porto 1450px) */
+            --container-max: 1450px;
+            --container-narrow: 800px;
+            --container-padding: 1.25rem; /* 20px */
+            --grid-columns: 12;
+            --grid-gutter: 1.875rem; /* 30px */
+
+            /* Breakpoints */
+            --bp-sm: 640px;
+            --bp-md: 768px;
+            --bp-lg: 1024px;
+            --bp-xl: 1280px;
+            --bp-xxl: 1536px;
+
+            /* 12. ANIMAÇÕES (GSAP Ready) */
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-in-out-sine: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+            --duration-fast: 0.2s;
+            --duration-normal: 0.4s;
+            --duration-slow: 0.8s;
+
+            /* 13. EFEITOS E TEXTURAS */
+            --overlay-dark-soft: rgba(0, 0, 0, 0.3);
+            --overlay-dark-medium: rgba(0, 0, 0, 0.6);
+            --overlay-dark-heavy: rgba(0, 0, 0, 0.85);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --blur-sm: blur(4px);
+            --blur-md: blur(12px);
+            --blur-lg: blur(24px);
+            --glass-filter: var(--blur-md) saturate(180%);
+            --noise-overlay: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            
+            --transition-base: var(--duration-normal) var(--ease-out-expo);
+            --transition-smooth: 0.6s var(--ease-out-expo);
+        }
+
+        /* RESET & BASE */
+        body {
+            font-family: var(--font-body);
+            background-color: #F4F4F5;
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+            color: var(--color-neutral-700);
+            line-height: var(--lh-body);
+            scroll-behavior: smooth;
+        }
+
+        /* TOP NAVIGATION INDEX */
+        .ds-top-nav {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #EEE;
+            z-index: 1000;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+            box-sizing: border-box;
+            margin-bottom: 40px;
+        }
+
+        .ds-top-nav a {
+            text-decoration: none;
+            color: var(--color-neutral-700);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.2s;
+        }
+
+        .ds-top-nav a:hover {
+            color: var(--color-primary);
+        }
+
+        /* SIDEBAR STYLES */
+        .ds-sidebar {
+            width: 280px;
+            background: var(--color-secondary-alt);
+            color: white;
+            padding: 40px 25px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            overflow-y: auto;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1100; /* Higher than top nav */
+        }
+
+        .ds-sidebar-brand {
+            font-weight: 800;
+            font-size: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ds-sidebar-brand span {
+            color: var(--color-primary);
+        }
+
+        .ds-nav-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 50px;
+        }
+
+        .ds-nav-item {
+            margin-bottom: 8px;
+        }
+
+        .ds-nav-link {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            border-radius: var(--radius-md);
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ds-nav-link:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .ds-nav-link svg {
+            width: 18px;
+            opacity: 0.7;
+        }
+
+        .ds-main-content {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 0; /* Padding moved to inner container to allow full-width top-nav */
+        }
+
+        .ds-main-inner {
+            padding: 40px 100px 100px;
+        }
+
+        .ds-container {
+            max-width: 1100px;
+            margin: 0;
+        }
+
+        header {
+            margin-bottom: 60px;
+            border-bottom: 2px solid #EEE;
+            padding-bottom: 20px;
+        }
+
+        .ds-main-title {
+            font-size: var(--text-h1-size);
+            font-weight: var(--weight-bold);
+            margin: 0;
+            color: #000;
+        }
+
+        .ds-section {
+            margin-bottom: 80px;
+        }
+
+        .ds-section-title {
+            font-size: 24px;
+            font-weight: var(--weight-bold);
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ds-section-title::before {
+            content: "";
+            width: 6px;
+            height: 30px;
+            background: var(--color-primary);
+            border-radius: 3px;
+        }
+
+        /* GRID DE CORES */
+        .ds-color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .ds-color-card {
+            border: 1px solid #EEE;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: 0.2s;
+        }
+
+        .ds-color-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .ds-color-swatch {
+            height: 120px;
+            width: 100%;
+            border-bottom: 1px solid #EEE;
+        }
+
+        .ds-color-info {
+            padding: 15px;
+        }
+
+        .ds-color-name {
+            font-size: 14px;
+            font-weight: 700;
+            margin: 0;
+            font-family: var(--font-mono);
+        }
+
+        .ds-color-hex {
+            font-size: 12px;
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .ds-color-usage {
+            font-size: 11px;
+            background: #F0F0F0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: #444;
+        }
+
+        /* TYPOGRAPHY SHOWCASE */
+        .ds-type-row {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 40px;
+            padding: 25px 0;
+            border-bottom: 1px solid #EEE;
+            align-items: baseline;
+        }
+
+        .ds-type-meta {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: #888;
+        }
+
+        .ds-type-meta span {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .ds-gradient-box {
+            height: 80px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #EEE;
+        }
+
+        .ds-link {
+            color: var(--color-primary);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 2px solid transparent;
+            transition: 0.2s;
+        }
+
+        .ds-link:hover {
+            border-bottom-color: var(--color-primary);
+        }
+
+        /* SPACING SHOWCASE */
+        .ds-space-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .ds-space-bar {
+            height: 24px;
+            background: var(--color-primary);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-size: 10px;
+            font-family: var(--font-mono);
+        }
+
+        .ds-space-label {
+            width: 150px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .ds-space-example {
+            display: flex;
+            gap: var(--space-md);
+            background: var(--color-neutral-100);
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+        }
+
+        .ds-space-box {
+            width: 50px;
+            height: 50px;
+            background: var(--color-primary-light);
+            border-radius: var(--radius-sm);
+        }
+
+        /* LAYOUT SHOWCASE */
+        .ds-grid-visualizer {
+            display: grid;
+            grid-template-columns: repeat(var(--grid-columns), 1fr);
+            gap: var(--grid-gutter);
+            background: var(--color-neutral-100);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            margin-bottom: 40px;
+        }
+
+        .ds-grid-col {
+            height: 100px;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px dashed var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: var(--color-primary);
+            font-family: var(--font-mono);
+        }
+
+        .ds-breakpoint-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .ds-breakpoint-table th,
+        .ds-breakpoint-table td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #EEE;
+        }
+
+        .ds-container-box {
+            border: 2px solid var(--color-neutral-300);
+            margin-bottom: 10px;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* COMPONENT SHOWCASE */
+        .ds-component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .ds-btn {
+            height: var(--btn-height);
+            padding: 0 32px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: var(--font-display);
+        }
+
+        .ds-btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .ds-btn-primary:hover {
+            background: var(--color-primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .ds-btn-secondary {
+            background: var(--color-secondary);
+            color: white;
+        }
+
+        .ds-btn-outline {
+            background: transparent;
+            border: 2px solid var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .ds-input {
+            height: var(--input-height);
+            width: 100%;
+            border: var(--border-default);
+            border-radius: var(--radius-md);
+            padding: 0 20px;
+            font-size: 16px;
+            background: white;
+            transition: 0.3s;
+            font-family: var(--font-body);
+        }
+
+        .ds-input:focus {
+            border-color: var(--color-primary);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(255, 0, 0, 0.1);
+        }
+
+        .ds-card {
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            border: var(--border-default);
+            transition: 0.3s;
+        }
+
+        .ds-card-elevated {
+            border: none;
+            box-shadow: var(--shadow-md);
+        }
+
+        .ds-card-elevated:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        /* NEW TKS COMPONENTS */
+        
+        /* 1. BADGES/CHIPS */
+        .tks-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 16px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: var(--color-neutral-100);
+            color: var(--color-neutral-700);
+            border: 1px solid var(--color-neutral-300);
+            transition: var(--duration-fast);
+            cursor: pointer;
+        }
+
+        .tks-badge-active {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        /* 2. PRODUCT CARD */
+        .tks-product-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: var(--border-default);
+            transition: var(--transition-base);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            max-width: 340px;
+        }
+
+        .tks-product-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .tks-product-image {
+            width: 100%;
+            height: 220px;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tks-product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s var(--ease-out-expo);
+        }
+
+        .tks-product-info {
+            padding: 24px;
+        }
+
+        .tks-product-category {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .tks-product-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0 0 16px 0;
+            color: var(--color-secondary);
+        }
+
+        .tks-product-specs {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 24px;
+            padding-top: 16px;
+            border-top: 1px solid var(--color-neutral-100);
+        }
+
+        .tks-spec-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+
+        .tks-spec-label {
+            color: #888;
+        }
+
+        .tks-spec-value {
+            font-weight: 600;
+            color: var(--color-secondary);
+        }
+
+        /* 3. TRUST BAR */
+        .tks-trust-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 30px;
+            background: white;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .tks-trust-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--color-secondary);
+        }
+
+        .tks-trust-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--color-primary);
+        }
+
+        /* 4. ACCORDION (FAQ) */
+        .tks-accordion {
+            border: 1px solid var(--color-neutral-300);
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .tks-accordion-header {
+            padding: 20px 24px;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            transition: var(--duration-fast);
+        }
+
+        .tks-accordion-header:hover {
+            background: var(--color-neutral-100);
+        }
+
+        .tks-accordion-content {
+            height: 0; /* Começa fechado */
+            overflow: hidden;
+            padding: 0 24px;
+            font-size: 15px;
+            color: #555;
+            line-height: 1.6;
+            transition: padding 0.3s var(--ease-out-expo);
+        }
+
+        .tks-accordion.active .tks-accordion-content {
+            padding-bottom: 24px;
+        }
+
+        .tks-accordion.active .tks-accordion-header svg {
+            transform: rotate(180deg);
+        }
+
+        .tks-accordion-header svg {
+            transition: transform 0.3s var(--ease-out-expo);
+        }
+
+        /* 5. HEADER / NAV */
+        .tks-header {
+            background: var(--color-secondary);
+            height: 90px;
+            display: flex;
+            align-items: center;
+            padding: 0 var(--container-padding);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .tks-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: var(--container-max);
+            margin: 0 auto;
+        }
+
+        .tks-logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+        }
+
+        .tks-logo span {
+            color: var(--color-primary);
+        }
+
+        .tks-nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .tks-nav-link {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--duration-fast);
+        }
+
+        .tks-nav-link:hover {
+            color: var(--color-primary);
+        }
+
+        /* 6. FOOTER */
+        .tks-footer {
+            background: var(--color-secondary-alt);
+            color: white;
+            padding: 80px 0 40px;
+        }
+
+        .tks-footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 60px;
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 var(--container-padding);
+        }
+
+        .tks-footer-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: white;
+        }
+
+        .tks-footer-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .tks-footer-list li {
+            margin-bottom: 12px;
+        }
+
+        .tks-footer-list a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--duration-fast);
+        }
+
+        .tks-footer-list a:hover {
+            color: white;
+        }
+
+        /* UTILITIES */
+        .tks-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: var(--grid-gutter);
+        }
+
+        .tks-section-padding {
+            padding: var(--space-section) 0;
+        }
+
+        /* EFFECTS DEMO */
+        .effect-card {
+            height: 150px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: #222;
+            color: white;
+            font-weight: 700;
+        }
+
+        .noise-layer {
+            position: absolute;
+            inset: 0;
+            background-image: var(--noise-overlay);
+            opacity: 0.05;
+            pointer-events: none;
+        }
+
+        .glass-demo {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-filter);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .gsap-box {
+            width: 60px;
+            height: 60px;
+            background: var(--color-primary);
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="ds-sidebar">
+        <div class="ds-sidebar-brand">
+            TKS<span>.DS</span>
+        </div>
+        <nav>
+            <ul class="ds-nav-list">
+                <li class="ds-nav-item">
+                    <a href="#colors" class="ds-nav-link">Cores e Gradientes</a>
+                </li>
+                <li class="ds-nav-item">
+                    <a href="#typography" class="ds-nav-link">Tipografia</a>
+                </li>
+                <li class="ds-nav-item">
+                    <a href="#spacing" class="ds-nav-link">Espaçamento</a>
+                </li>
+                <li class="ds-nav-item">
+                    <a href="#layout" class="ds-nav-link">Grid e Layout</a>
+                </li>
+                <li class="ds-nav-item">
+                    <a href="#ds-components" class="ds-nav-link">Componentes Visuais</a>
+                </li>
+                <li class="ds-nav-item">
+                    <a href="#tks-components" class="ds-nav-link">Componentes TKS</a>
+                </li>
+                <li class="ds-nav-item">
+                    <a href="#ds-effects" class="ds-nav-link">Efeitos e Texturas</a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="ds-main-content">
+        <!-- TOP NAVIGATION INDEX (Sticky) -->
+        <nav class="ds-top-nav">
+            <a href="#colors">Cores</a>
+            <a href="#typography">Tipografia</a>
+            <a href="#spacing">Espaçamento</a>
+            <a href="#layout">Grid</a>
+            <a href="#ds-components">Componentes</a>
+            <a href="#tks-components">TKS</a>
+            <a href="#ds-effects">Efeitos</a>
+        </nav>
+
+        <div class="ds-container ds-main-inner">
+            <header>
+                <h1 class="ds-main-title">Design System TKS Rádios</h1>
+                <p>Guia de Estilo Unificado para Interfaces de Alta Performance</p>
+            </header>
+
+            <!-- SEÇÃO: CORES -->
+            <section class="ds-section" id="colors">
+                <h2 class="ds-section-title">Paleta de Cores</h2>
+                <div class="ds-color-grid">
+                    <!-- Primária -->
+                    <div class="ds-color-card">
+                        <div class="ds-color-swatch" style="background-color: var(--color-primary);"></div>
+                        <div class="ds-color-info">
+                            <p class="ds-color-name">--color-primary</p>
+                            <p class="ds-color-hex">#FF0000</p>
+                            <p class="ds-color-usage">Marca e CTAs principais</p>
+                        </div>
+                    </div>
+                    <!-- Acento -->
+                    <div class="ds-color-card">
+                        <div class="ds-color-swatch" style="background-color: var(--color-accent);"></div>
+                        <div class="ds-color-info">
+                            <p class="ds-color-name">--color-accent</p>
+                            <p class="ds-color-hex">#EEE109</p>
+                            <p class="ds-color-usage">Destaques e Selos (Ref. Porto)</p>
+                        </div>
+                    </div>
+                    <!-- Sucesso -->
+                    <div class="ds-color-card">
+                        <div class="ds-color-swatch" style="background-color: var(--color-success);"></div>
+                        <div class="ds-color-info">
+                            <p class="ds-color-name">--color-success</p>
+                            <p class="ds-color-hex">#21BE6E</p>
+                            <p class="ds-color-usage">Botão WhatsApp / Conversão</p>
+                        </div>
+                    </div>
+                    <!-- Neutro Escuro -->
+                    <div class="ds-color-card">
+                        <div class="ds-color-swatch" style="background-color: var(--color-neutral-700);"></div>
+                        <div class="ds-color-info">
+                            <p class="ds-color-name">--neutral-700</p>
+                            <p class="ds-color-hex">#121212</p>
+                            <p class="ds-color-usage">Textos e Fundos Escuros</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO: GRADIENTES -->
+            <section class="ds-section">
+                <h2 class="ds-section-title">Gradientes de Interface</h2>
+                <div class="ds-color-grid">
+                    <div>
+                        <div class="ds-gradient-box" style="background: var(--gradient-overlay-dark);"></div>
+                        <p class="ds-color-name">--gradient-overlay-dark</p>
+                    </div>
+                    <div>
+                        <div class="ds-gradient-box" style="background: var(--gradient-hero);"></div>
+                        <p class="ds-color-name">--gradient-hero</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO: TIPOGRAFIA -->
+            <section class="ds-section" id="typography">
+                <h2 class="ds-section-title">Escala Tipográfica (Montserrat)</h2>
+
+                <div class="ds-type-row">
+                    <h1 style="margin:0; font-size: var(--text-h1-size); line-height: var(--lh-display);">Título Hero H1
+                    </h1>
+                    <div class="ds-type-meta">
+                        <span>Size:</span> 3rem (48px)<br>
+                        <span>Weight:</span> Bold (700)
+                    </div>
+                </div>
+
+                <div class="ds-type-row">
+                    <h2 style="margin:0; font-size: var(--text-h2-size); line-height: var(--lh-heading);">Título de Seção
+                        H2
+                    </h2>
+                    <div class="ds-type-meta">
+                        <span>Size:</span> 2.25rem (36px)
+                    </div>
+                </div>
+
+                <div class="ds-type-row">
+                    <p style="margin:0; font-size: var(--text-body-size);">Texto de corpo (Body). Otimizado em 18px para
+                        leitura em dispositivos móveis e ambientes externos (cabines de caminhão), garantindo alto
+                        contraste
+                        e clareza.</p>
+                    <div class="ds-type-meta">
+                        <span>Size:</span> 1.125rem (18px)<br>
+                        <span>LH:</span> 1.6
+                    </div>
+                </div>
+
+                <div class="ds-type-row">
+                    <div style="display: flex; gap: 20px; align-items: center;">
+                        <a href="#" class="ds-link">Link de Exemplo</a>
+                        <span
+                            style="text-transform: uppercase; font-weight: 700; font-size: 14px; color: var(--color-primary); letter-spacing: 0.1em;">Eyebrow
+                            Text</span>
+                    </div>
+                    <div class="ds-type-meta">
+                        <span>Interações & Auxiliares</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO: ESPAÇAMENTO -->
+            <section class="ds-section" id="spacing">
+                <h2 class="ds-section-title">Espaçamento e Ritmo</h2>
+
+                <div class="ds-spacing-showcase">
+                    <div class="ds-space-row">
+                        <div class="ds-space-label">--space-xs (5px)</div>
+                        <div class="ds-space-bar" style="width: 5px;"></div>
+                    </div>
+                    <div class="ds-space-row">
+                        <div class="ds-space-label">--space-sm (10px)</div>
+                        <div class="ds-space-bar" style="width: 10px;"></div>
+                    </div>
+                    <div class="ds-space-row">
+                        <div class="ds-space-label">--space-md (20px)</div>
+                        <div class="ds-space-bar" style="width: 20px;"></div>
+                    </div>
+                    <div class="ds-space-row">
+                        <div class="ds-space-label">--space-lg (40px)</div>
+                        <div class="ds-space-bar" style="width: 40px;"></div>
+                    </div>
+                    <div class="ds-space-row">
+                        <div class="ds-space-label">--space-xl (80px)</div>
+                        <div class="ds-space-bar" style="width: 80px;"></div>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 18px; margin: 40px 0 20px;">Exemplo Prático (Gap MD - 20px)</h3>
+                <div class="ds-space-example">
+                    <div class="ds-space-box"></div>
+                    <div class="ds-space-box"></div>
+                    <div class="ds-space-box"></div>
+                </div>
+
+                <h3 style="font-size: 18px; margin: 40px 0 20px;">Ritmo Vertical entre Seções (80px)</h3>
+                <div style="background: var(--color-neutral-100); padding: 10px; border-radius: 8px;">
+                    <div
+                        style="height: 40px; background: #DDD; border-radius: 4px; margin-bottom: var(--space-section); display: flex; align-items: center; justify-content: center; font-size: 12px; color: #666;">
+                        Seção A</div>
+                    <div
+                        style="height: 40px; background: #DDD; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #666;">
+                        Seção B (Espaçada por --space-section)</div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO: GRID E LAYOUT -->
+            <section class="ds-section" id="layout">
+                <h2 class="ds-section-title">Grid e Layout</h2>
+
+                <h3 style="font-size: 18px; margin-bottom: 20px;">Grid de 12 Colunas (Gutter: 30px)</h3>
+                <div class="ds-grid-visualizer">
+                    <div class="ds-grid-col">1</div>
+                    <div class="ds-grid-col">2</div>
+                    <div class="ds-grid-col">3</div>
+                    <div class="ds-grid-col">4</div>
+                    <div class="ds-grid-col">5</div>
+                    <div class="ds-grid-col">6</div>
+                    <div class="ds-grid-col">7</div>
+                    <div class="ds-grid-col">8</div>
+                    <div class="ds-grid-col">9</div>
+                    <div class="ds-grid-col">10</div>
+                    <div class="ds-grid-col">11</div>
+                    <div class="ds-grid-col">12</div>
+                </div>
+
+                <h3 style="font-size: 18px; margin-bottom: 20px;">Variações de Container</h3>
+                <div class="ds-container-box"
+                    style="max-width: var(--container-max); margin-left: auto; margin-right: auto;">
+                    Default Container (--container-max: 1450px)
+                </div>
+                <div class="ds-container-box"
+                    style="max-width: var(--container-narrow); margin-left: auto; margin-right: auto;">
+                    Narrow Container (--container-narrow: 800px) - Para leitura e formulários
+                </div>
+
+                <h3 style="font-size: 18px; margin: 40px 0 20px;">Breakpoints do Sistema</h3>
+                <table class="ds-breakpoint-table">
+                    <thead>
+                        <tr>
+                            <th>Token</th>
+                            <th>Valor</th>
+                            <th>Uso Comum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>--bp-sm</td>
+                            <td>640px</td>
+                            <td>Mobile Large</td>
+                        </tr>
+                        <tr>
+                            <td>--bp-md</td>
+                            <td>768px</td>
+                            <td>Tablets</td>
+                        </tr>
+                        <tr>
+                            <td>--bp-lg</td>
+                            <td>1024px</td>
+                            <td>Laptops / Desktop Small</td>
+                        </tr>
+                        <tr>
+                            <td>--bp-xl</td>
+                            <td>1280px</td>
+                            <td>Desktop Standard</td>
+                        </tr>
+                        <tr>
+                            <td>--bp-xxl</td>
+                            <td>1536px</td>
+                            <td>Ultra Wide (Max Width)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- SEÇÃO: COMPONENTES VISUAIS (Etapa 2.5) -->
+            <section class="ds-section ds-components" id="ds-components">
+                <h2 class="ds-section-title">Componentes Visuais</h2>
+                <p style="margin-bottom: 40px; color: #666;">Extração de padrões da referência (Porto Náutico) para o sistema TKS.</p>
+
+                <!-- Border Radius -->
+                <h3 style="font-size: 18px; margin-bottom: 20px;">Border Radius</h3>
+                <div style="display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 60px;">
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <div style="width: 80px; height: 80px; background: white; border: 1px solid #ddd; border-radius: var(--radius-xs);"></div>
+                        <span style="font-size: 11px; font-family: var(--font-mono);">XS (2px)</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <div style="width: 80px; height: 80px; background: white; border: 1px solid #ddd; border-radius: var(--radius-sm);"></div>
+                        <span style="font-size: 11px; font-family: var(--font-mono);">SM (4px)</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <div style="width: 80px; height: 80px; background: white; border: 1px solid #ddd; border-radius: var(--radius-md);"></div>
+                        <span style="font-size: 11px; font-family: var(--font-mono);">MD (8px)</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <div style="width: 80px; height: 80px; background: white; border: 1px solid #ddd; border-radius: var(--radius-lg);"></div>
+                        <span style="font-size: 11px; font-family: var(--font-mono);">LG (12px)</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <div style="width: 80px; height: 80px; background: white; border: 1px solid #ddd; border-radius: var(--radius-xl);"></div>
+                        <span style="font-size: 11px; font-family: var(--font-mono);">XL (20px)</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <div style="width: 80px; height: 80px; background: white; border: 1px solid #ddd; border-radius: var(--radius-full);"></div>
+                        <span style="font-size: 11px; font-family: var(--font-mono);">FULL</span>
+                    </div>
+                </div>
+
+                <!-- Shadows -->
+                <h3 style="font-size: 18px; margin-bottom: 20px;">Sombras (Elevação)</h3>
+                <div class="ds-component-grid" style="margin-bottom: 60px;">
+                    <div style="padding: 30px; background: white; border-radius: var(--radius-md); box-shadow: var(--shadow-subtle);">
+                        <p style="margin:0; font-weight: 700; font-size: 14px;">Subtle Shadow</p>
+                        <code style="font-size: 11px;">--shadow-subtle</code>
+                    </div>
+                    <div style="padding: 30px; background: white; border-radius: var(--radius-md); box-shadow: var(--shadow-md);">
+                        <p style="margin:0; font-weight: 700; font-size: 14px;">Medium Shadow</p>
+                        <code style="font-size: 11px;">--shadow-md</code>
+                    </div>
+                    <div style="padding: 30px; background: white; border-radius: var(--radius-md); box-shadow: var(--shadow-elevated);">
+                        <p style="margin:0; font-weight: 700; font-size: 14px;">Elevated Shadow</p>
+                        <code style="font-size: 11px;">--shadow-elevated</code>
+                    </div>
+                    <div style="padding: 30px; background: white; border-radius: var(--radius-md); box-shadow: var(--shadow-dramatic);">
+                        <p style="margin:0; font-weight: 700; font-size: 14px;">Dramatic Shadow</p>
+                        <code style="font-size: 11px;">--shadow-dramatic</code>
+                    </div>
+                </div>
+
+                <!-- Botões -->
+                <h3 style="font-size: 18px; margin-bottom: 20px;">Botões</h3>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 60px; align-items: center;">
+                    <button class="ds-btn ds-btn-primary">Primário</button>
+                    <button class="ds-btn ds-btn-secondary">Secundário</button>
+                    <button class="ds-btn ds-btn-outline">Outline</button>
+                    <button class="ds-btn" style="background: transparent; border: none; color: var(--color-primary); text-decoration: underline;">Ghost Link</button>
+                    <button class="ds-btn ds-btn-primary" style="width: 60px; padding: 0;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                    </button>
+                </div>
+
+                <!-- Cards -->
+                <h3 style="font-size: 18px; margin-bottom: 20px;">Cards</h3>
+                <div class="ds-component-grid" style="margin-bottom: 60px;">
+                    <div class="ds-card" style="border: var(--border-default);">
+                        <h4 style="margin:0 0 10px;">Card com Borda</h4>
+                        <p style="font-size: 14px; color: #666; margin:0;">Usado para separar conteúdos com clareza.</p>
+                    </div>
+                    <div class="ds-card" style="border: none; box-shadow: var(--shadow-md);">
+                        <h4 style="margin:0 0 10px;">Card com Sombra</h4>
+                        <p style="font-size: 14px; color: #666; margin:0;">Usado para elementos em destaque ou flutuantes.</p>
+                    </div>
+                </div>
+
+                <!-- Inputs -->
+                <h3 style="font-size: 18px; margin-bottom: 20px;">Inputs & Forms</h3>
+                <div style="max-width: 500px; margin-bottom: 60px;">
+                    <label style="display: block; font-size: 13px; font-weight: 700; margin-bottom: 8px;">Nome Completo</label>
+                    <input type="text" class="ds-input" placeholder="Digite seu nome...">
+                </div>
+
+                <!-- Badges -->
+                <h3 style="font-size: 18px; margin-bottom: 20px;">Badges & Tags</h3>
+                <div style="display: flex; gap: 12px; margin-bottom: 60px;">
+                    <span class="tks-badge" style="background: var(--color-primary); color: white; border: none;">Promoção</span>
+                    <span class="tks-badge" style="background: var(--color-success); color: white; border: none;">Novo</span>
+                    <span class="tks-badge" style="background: var(--color-accent); color: black; border: none;">Destaque</span>
+                </div>
+
+                <!-- Dividers -->
+                <h3 style="font-size: 18px; margin-bottom: 20px;">Divisores</h3>
+                <div style="margin-bottom: 60px;">
+                    <hr style="border: none; border-top: var(--border-default); margin: 20px 0;">
+                    <hr style="border: none; border-top: 2px solid var(--color-primary); width: 60px; margin: 20px 0;">
+                </div>
+            </section>
+
+            <!-- SEÇÃO: COMPONENTES TKS -->
+            <section class="ds-section" id="tks-components">
+                <h2 class="ds-section-title">Componentes de Negócio TKS</h2>
+
+                <h3 style="font-size: 18px; margin-bottom: 20px;">1. Chips de Filtro / Uso</h3>
+                <div style="display: flex; gap: 12px; margin-bottom: 40px;">
+                    <span class="tks-badge tks-badge-active">Todos</span>
+                    <span class="tks-badge">Caminhoneiro</span>
+                    <span class="tks-badge">Rural</span>
+                    <span class="tks-badge">Frota</span>
+                    <span class="tks-badge">Entusiasta</span>
+                </div>
+
+                <h3 style="font-size: 18px; margin-bottom: 20px;">2. Barra de Confiança (Seção 2)</h3>
+                <div class="tks-trust-bar" style="margin-bottom: 40px;">
+                    <div class="tks-trust-item">
+                        <svg class="tks-trust-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                        Garantia de 1 Ano
+                    </div>
+                    <div class="tks-trust-item">
+                        <svg class="tks-trust-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+                        Troca Imediata
+                    </div>
+                    <div class="tks-trust-item">
+                        <svg class="tks-trust-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z"/></svg>
+                        Marca Registrada INPI
+                    </div>
+                </div>
+
+                <h3 style="font-size: 18px; margin-bottom: 20px;">3. Card de Produto (Showroom)</h3>
+                <div class="ds-component-grid" style="margin-bottom: 40px;">
+                    <div class="tks-product-card">
+                        <div class="tks-product-image">
+                            <img src="img/radio TKS TK-110 orion - principal.jpeg" alt="Rádio TKS TK-110 Orion">
+                            <span class="tks-badge" style="position: absolute; top: 15px; right: 15px; background: var(--color-accent); color: black; border: none; font-size: 10px; padding: 4px 10px;">O MENOR SSB</span>
+                        </div>
+                        <div class="tks-product-info" style="padding: 25px;">
+                            <div class="tks-product-category" style="font-size: 10px; letter-spacing: 2px;">TECNOLOGIA COMPACTA</div>
+                            <h4 class="tks-product-title" style="margin-bottom: 15px;">TKS TK-110 Orion</h4>
+                            
+                            <div class="tks-product-specs" style="margin-bottom: 25px;">
+                                <div class="tks-spec-item">
+                                    <span class="tks-spec-label">Potência Real</span>
+                                    <span class="tks-spec-value">35W SSB</span>
+                                </div>
+                                <div class="tks-spec-item">
+                                    <span class="tks-spec-label">Alimentação</span>
+                                    <span class="tks-spec-value">12V / 24V Auto</span>
+                                </div>
+                                <div class="tks-spec-item">
+                                    <span class="tks-spec-label">Garantia</span>
+                                    <span class="tks-spec-value" style="color: var(--color-success); font-weight: 700;">1 Ano de Fábrica</span>
+                                </div>
+                            </div>
+                            <button class="ds-btn ds-btn-outline" style="width: 100%; font-size: 12px; border-width: 1px;">Saber Mais do Produto</button>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 18px; margin-bottom: 20px;">4. FAQ Accordion</h3>
+                <div style="max-width: 800px;">
+                    <div class="tks-accordion">
+                        <div class="tks-accordion-header">
+                            Como funciona a garantia de 1 ano?
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                        </div>
+                        <div class="tks-accordion-content">
+                            Nossa garantia cobre qualquer defeito de fabricação. O processo é humanizado via WhatsApp e focado na resolução rápida para que você não fique parado.
+                        </div>
+                    </div>
+                    <div class="tks-accordion">
+                        <div class="tks-accordion-header">
+                            O que significa "Troca Imediata"?
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 18px; margin: 40px 0 20px;">5. Header & Navigation</h3>
+                <div style="background: #F4F4F5; padding: 20px; border-radius: 8px;">
+                    <header class="tks-header" style="position: static; border-radius: 4px;">
+                        <nav class="tks-nav">
+                            <a href="#" class="tks-logo">TKS<span>RÁDIOS</span></a>
+                            <ul class="tks-nav-links">
+                                <li><a href="#" class="tks-nav-link">Home</a></li>
+                                <li><a href="#" class="tks-nav-link">Produtos</a></li>
+                                <li><a href="#" class="tks-nav-link">Downloads</a></li>
+                                <li><a href="#" class="tks-nav-link">Suporte</a></li>
+                            </ul>
+                            <button class="ds-btn ds-btn-primary" style="height: 44px; padding: 0 20px; font-size: 13px;">WhatsApp</button>
+                        </nav>
+                    </header>
+                </div>
+
+                <h3 style="font-size: 18px; margin: 40px 0 20px;">6. Footer Structure</h3>
+                <div style="border-radius: 8px; overflow: hidden;">
+                    <footer class="tks-footer">
+                        <div class="tks-footer-grid">
+                            <div>
+                                <a href="#" class="tks-logo">TKS<span>RÁDIOS</span></a>
+                                <p style="color: rgba(255,255,255,0.5); font-size: 14px; margin-top: 20px; line-height: 1.6;">
+                                    Líder em radiocomunicação no Brasil há mais de 15 anos. Tecnologia PX de alta performance para quem não pode parar.
+                                </p>
+                            </div>
+                            <div>
+                                <h4 class="tks-footer-title">Links</h4>
+                                <ul class="tks-footer-list">
+                                    <li><a href="#">Produtos</a></li>
+                                    <li><a href="#">Revenda</a></li>
+                                    <li><a href="#">Downloads</a></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="tks-footer-title">Suporte</h4>
+                                <ul class="tks-footer-list">
+                                    <li><a href="#">Garantia</a></li>
+                                    <li><a href="#">Assistência</a></li>
+                                    <li><a href="#">Manual</a></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="tks-footer-title">Contato</h4>
+                                <p style="color: rgba(255,255,255,0.5); font-size: 14px;">contato@tksradios.com</p>
+                                <div style="display: flex; gap: 15px; margin-top: 15px;">
+                                    <div style="width: 32px; height: 32px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+                                    <div style="width: 32px; height: 32px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+                                    <div style="width: 32px; height: 32px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </section>
+
+            <!-- SEÇÃO: EFEITOS E TEXTURAS (Etapa 2.6) -->
+            <section class="ds-section ds-effects" id="ds-effects">
+                <h2 class="ds-section-title">Efeitos e Texturas</h2>
+                <p style="margin-bottom: 40px; color: #666;">Camadas visuais que conferem profundidade e realismo premium à interface.</p>
+
+                <!-- Overlays -->
+                <h3 style="font-size: 18px; margin-bottom: 20px;">Overlays de Imagem</h3>
+                <div class="ds-component-grid" style="margin-bottom: 60px;">
+                    <div class="effect-card" style="background: url('https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=400&q=80') center/cover;">
+                        <div style="position: absolute; inset: 0; background: var(--overlay-dark-soft);"></div>
+                        <span style="position: relative;">Soft (30%)</span>
+                    </div>
+                    <div class="effect-card" style="background: url('https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=400&q=80') center/cover;">
+                        <div style="position: absolute; inset: 0; background: var(--overlay-dark-medium);"></div>
+                        <span style="position: relative;">Medium (60%)</span>
+                    </div>
+                    <div class="effect-card" style="background: url('https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=400&q=80') center/cover;">
+                        <div style="position: absolute; inset: 0; background: var(--overlay-dark-heavy);"></div>
+                        <span style="position: relative;">Heavy (85%)</span>
+                    </div>
+                </div>
+
+                <!-- Glassmorphism -->
+                <h3 style="font-size: 18px; margin-bottom: 20px;">Glassmorphism & Blur</h3>
+                <div style="background: #121212; padding: 80px; border-radius: var(--radius-lg); margin-bottom: 60px; position: relative; overflow: hidden;">
+                    <!-- Mesh Gradient Background for contrast -->
+                    <div style="position: absolute; inset: 0; background: radial-gradient(at 0% 0%, #FF0000 0px, transparent 50%), radial-gradient(at 100% 100%, #EEE109 0px, transparent 50%), radial-gradient(at 50% 50%, #21BE6E 0px, transparent 50%); opacity: 0.4;"></div>
+                    
+                    <div class="glass-demo" style="max-width: 500px; margin: 0 auto; position: relative; z-index: 2; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <h4 style="margin:0 0 10px; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Efeito Vidro Premium</h4>
+                        <p style="margin:0; font-size: 15px; color: rgba(255,255,255,0.9); line-height: 1.6;">O segredo do glassmorphism é o contraste. Com um fundo vibrante ou escuro, o desfoque (Backdrop Filter) cria uma sensação de profundidade real.</p>
+                        <div style="margin-top: 20px; padding: 12px; background: rgba(0,0,0,0.2); border-radius: 6px;">
+                            <code style="color: var(--color-accent); font-size: 12px; font-family: var(--font-mono);">backdrop-filter: blur(12px) saturate(180%);</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Noise / Texture -->
+                <h3 style="font-size: 18px; margin-bottom: 20px;">Textura de Ruído (Noise)</h3>
+                <div class="ds-component-grid" style="margin-bottom: 60px;">
+                    <div class="effect-card" style="background: var(--color-secondary);">
+                        <div class="noise-layer"></div>
+                        <span style="position: relative;">Dark Noise</span>
+                    </div>
+                    <div class="effect-card" style="background: var(--color-primary);">
+                        <div class="noise-layer"></div>
+                        <span style="position: relative;">Primary Noise</span>
+                    </div>
+                    <div class="effect-card" style="background: white; color: black; border: 1px solid #ddd;">
+                        <div class="noise-layer" style="opacity: 0.1;"></div>
+                        <span style="position: relative;">Light Noise</span>
+                    </div>
+                </div>
+
+                <!-- Transitions -->
+                <h3 style="font-size: 18px; margin-bottom: 20px;">Demonstração de Transições (GSAP Easings)</h3>
+                <p style="margin-bottom: 20px; font-size: 14px; color: #666;">Clique nos botões para disparar a animação e visualizar o comportamento do easing.</p>
+                
+                <div style="background: white; padding: 40px; border-radius: var(--radius-lg); border: var(--border-default);">
+                    <div style="display: flex; gap: 60px; flex-wrap: wrap;">
+                        <!-- Expo.out -->
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                            <div id="box-expo" class="gsap-box"></div>
+                            <button class="ds-btn ds-btn-primary" style="height: 40px; padding: 0 15px; font-size: 12px;" onclick="gsap.fromTo('#box-expo', {x: 0}, {x: 50, duration: 0.8, ease: 'expo.out', yoyo: true, repeat: 1})">Expo.out</button>
+                            <code style="font-size: 10px;">ease: "expo.out"</code>
+                        </div>
+                        
+                        <!-- Power4.inOut -->
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                            <div id="box-power4" class="gsap-box" style="background: var(--color-secondary);"></div>
+                            <button class="ds-btn ds-btn-secondary" style="height: 40px; padding: 0 15px; font-size: 12px;" onclick="gsap.fromTo('#box-power4', {scale: 1}, {scale: 1.5, duration: 0.6, ease: 'power4.inOut', yoyo: true, repeat: 1})">Power4.inOut</button>
+                            <code style="font-size: 10px;">ease: "power4.inOut"</code>
+                        </div>
+
+                        <!-- Elastic.out -->
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                            <div id="box-elastic" class="gsap-box" style="background: var(--color-accent);"></div>
+                            <button class="ds-btn ds-btn-outline" style="height: 40px; padding: 0 15px; font-size: 12px; border-color: var(--color-accent); color: var(--color-secondary);" onclick="gsap.fromTo('#box-elastic', {y: 0}, {y: -30, duration: 1.2, ease: 'elastic.out(1, 0.3)', yoyo: true, repeat: 1})">Elastic.out</button>
+                            <code style="font-size: 10px;">ease: "elastic.out"</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <h3 style="font-size: 18px; margin-bottom: 20px;">Filtros de Imagem</h3>
+                <div class="ds-component-grid" style="margin-bottom: 60px;">
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=300&q=80" style="border-radius: 8px; filter: var(--filter-grayscale);" alt="Filtro Grayscale">
+                        <span style="font-size: 12px; font-weight: 700;">Grayscale 100%</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=300&q=80" style="border-radius: 8px; filter: brightness(0.5) contrast(1.2);" alt="Filtro High Contrast">
+                        <span style="font-size: 12px; font-weight: 700;">High Contrast / Darken</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <!-- SCRIPTS INTERATIVOS -->
+    <script>
+        // Lógica do Accordion FAQ com GSAP
+        document.querySelectorAll('.tks-accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const accordion = header.parentElement;
+                const content = accordion.querySelector('.tks-accordion-content');
+                const isActive = accordion.classList.contains('active');
+
+                // Fecha outros accordions (opcional, para comportamento de sanfona única)
+                /*
+                document.querySelectorAll('.tks-accordion').forEach(other => {
+                    if (other !== accordion && other.classList.contains('active')) {
+                        other.classList.remove('active');
+                        gsap.to(other.querySelector('.tks-accordion-content'), { height: 0, duration: 0.4, ease: "power2.inOut" });
+                    }
+                });
+                */
+
+                if (isActive) {
+                    accordion.classList.remove('active');
+                    gsap.to(content, { height: 0, duration: 0.4, ease: "power2.inOut" });
+                } else {
+                    accordion.classList.add('active');
+                    gsap.to(content, { height: "auto", duration: 0.4, ease: "power2.inOut" });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
